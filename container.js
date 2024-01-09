@@ -1,16 +1,17 @@
+'use strict';
 
 const tasksOperation = function () {
   let counter = 1;
   let taskList = [];
-  return function(action, data = { task:  undefined, id: 0 }) {
-    const actions =  {
+  return function (action, data = { task: undefined, id: 0 }) {
+    const actions = {
       clear: () => {
         taskList = [];
         return taskList;
       },
       get: () => {
-        if(data.id > 0) {
-          return taskList.find(task => task.id === data.id);
+        if (data.id > 0) {
+          return taskList.find((task) => task.id === data.id);
         }
         return [...taskList];
       },
@@ -24,7 +25,6 @@ const tasksOperation = function () {
       edit: () => {
         let pos = taskList.findIndex((t) => t.id === data.task.id);
         if (pos) {
-          console.dir(pos);
           taskList[pos] = data.task;
           return taskList[pos];
         }
@@ -34,12 +34,12 @@ const tasksOperation = function () {
         const res = taskList.filter((t) => t.id === data.id);
         taskList = taskList.filter((t) => t.id !== data.id);
         return res;
-      }
+      },
     };
     return actions[action]();
-  }
-}
+  };
+};
 
 const container = tasksOperation();
 
-module.exports = { container };
+export { container };
