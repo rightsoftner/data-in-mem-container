@@ -3,13 +3,23 @@
   "version": "0.0.1",
   "description": "",
   "main": "container.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node ./tests/test.js",
+    "lint": "eslint . && prettier -c \"**/*.js\" \"**/*.json\" \"**/*.md\"",
+    "fmt": "prettier --write \"**/*.js\" \"**/*.json\" \"**/*.md\""
+  },
+  "engines": {
+    "node": "^18.15 || 20 || 21"
   },
   "keywords": [],
   "author": "Volodymyr Nerovnia <nerv@i.ua>",
   "license": "MIT",
   "devDependencies": {
-    "chai": "^5.0.0"
+    "chai": "^5.0.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.2",
+    "prettier": "^3.1.1"
   }
 }
