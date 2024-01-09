@@ -1,31 +1,38 @@
-let taskList = [];
 
-const tasksOperation = function (action) {
+const tasksOperation = function () {
   let counter = 1;
-  return function(task = undefined, id = 0) {
+  let taskList = [];
+  return function(action, data = { task:  undefined, id: 0 }) {
     const actions =  {
       clear: () => {
         taskList = [];
         return taskList;
       },
       get: () => {
+        if(data.id > 0) {
+          return taskList.find(task => task.id === data.id);
+        }
         return [...taskList];
       },
       add: () => {
-        if (!task) return;
-        task.id = counter;
-        taskList.push(task);
+        if (!data.task) return;
+        data.task.id = counter;
+        taskList.push(data.task);
         counter++;
-        return task;
+        return data.task;
       },
       edit: () => {
-        const pos = taskList.find((t) => t.id === task.id);
-        if (pos) return taskList[pos] = task;
+        let pos = taskList.findIndex((t) => t.id === data.task.id);
+        if (pos) {
+          console.dir(pos);
+          taskList[pos] = data.task;
+          return taskList[pos];
+        }
         return;
       },
       delete: () => {
-        const res = taskList.filter((t) => t.id === id);
-        taskList = taskList.filter((t) => t.id !== id);
+        const res = taskList.filter((t) => t.id === data.id);
+        taskList = taskList.filter((t) => t.id !== data.id);
         return res;
       }
     };
@@ -33,19 +40,6 @@ const tasksOperation = function (action) {
   }
 }
 
-const clear = tasksOperation("clear");
-const get = tasksOperation("get");
-const add = tasksOperation("add");
-const del = tasksOperation("delete");
-const edit = tasksOperation("edit");
+const container = tasksOperation();
 
-module.exports = {
-  clear,
-  get,
-  add,
-  del,
-  edit,
-};
-
-
-
+module.exports = { container };
